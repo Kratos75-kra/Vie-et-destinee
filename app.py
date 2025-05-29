@@ -2,7 +2,7 @@
 import streamlit as st
 from datetime import datetime
 
-# === FONCTIONS DE NUMEROLOGIE ===
+# === FONCTIONS DE NUMÉROLOGIE ===
 def calcul_chemin_de_vie(date_naissance):
     chiffres = [int(c) for c in date_naissance if c.isdigit()]
     total = sum(chiffres)
@@ -28,18 +28,42 @@ def interpretation_chemin(chemin):
     return interpretations.get(chemin, "Aucune interprétation disponible.")
 
 # === INTERFACE STREAMLIT ===
-st.set_page_config(page_title="Vie et Destinée", page_icon="✨")
-st.title("💫 Vie et Destinée")
-st.markdown("Entrez vos informations pour découvrir votre chiffre de chance et votre mission de vie.")
+st.set_page_config(page_title="Vie et Destinée ✨", page_icon="✨")
 
-nom = st.text_input("Nom complet")
-date_naissance = st.date_input("Date de naissance", format="YYYY-MM-DD")
+# Bannière (image URL libre ou base64 pour plus tard)
+st.markdown(
+    """
+    <div style="text-align:center;">
+        <img src="https://i.imgur.com/WxNc92E.png" alt="Vie et Destinée" width="200" />
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown("<h1 style='color:#6A0DAD; text-align:center;'>💫 Vie et Destinée</h1>", unsafe_allow_html=True)
+st.markdown("---")
+
+nom = st.text_input("Entrez votre nom complet")
+date_naissance = st.date_input("Choisissez votre date de naissance", format="YYYY-MM-DD")
 
 if st.button("Analyser ma date de naissance"):
-    chemin = calcul_chemin_de_vie(date_naissance.strftime("%Y%m%d"))
-    interpretation = interpretation_chemin(chemin)
+    if not nom.strip():
+        st.warning("Merci d'entrer votre nom complet pour une expérience personnalisée.")
+    else:
+        chemin = calcul_chemin_de_vie(date_naissance.strftime("%Y%m%d"))
+        interpretation = interpretation_chemin(chemin)
 
-    st.subheader(f"🔢 Votre chiffre de chance : {chemin}")
-    st.markdown(f"**Mission de vie :** {interpretation}")
+        st.markdown(f"### Bonjour, {nom.split()[0].capitalize()} !")
+        st.subheader(f"🔢 Votre chiffre de chance : {chemin}")
+        st.markdown(f"**Mission de vie :** {interpretation}")
 
-    st.info("Pour une analyse spirituelle plus avancée incluant chiromancie, astrologie et numérologie complète, débloquez la version premium prochainement !")
+        st.info(
+            "Pour une analyse spirituelle plus avancée incluant chiromancie, astrologie et numérologie complète, "
+            "débloquez la version premium prochainement !"
+        )
+
+st.markdown("---")
+st.markdown(
+    "<p style='text-align:center; font-size:0.8em; color:gray;'>© 2025 Vie et Destinée - Tous droits réservés</p>",
+    unsafe_allow_html=True,
+)
